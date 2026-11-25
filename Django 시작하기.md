@@ -106,4 +106,60 @@ def main(request):
 
 
 
+## 템플릿 파일 구조화 하기
+### 1. Base.html 생성
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    BASE
 
+    {% block 블록이름(본문은 보통 content) %}
+        <!-- 실제 다른 페이지에서 작성한 내용이 들어갈 공간 -->
+    {% endblock %}
+</body>
+</html>
+
+```
+
+### 2. 페이지 .html 생성
+base.html을 가져와서 content 블록 부분에만 해당페이지별로 적용
+```html
+{% extends 'base.html' %}
+
+{% block title %}
+진짜 제목인가..?
+{% endblock %}
+
+
+{% block content %}
+진짜인가? 쏙 들어가나?
+{% endblock %}
+```
+
+### 3. header, footer 분리 후 base.html에 삽입하기
+templates/base.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    BASE
+    {% block 블록이름(본문은 보통 content) %}
+        <!-- 실제 다른 페이지에서 작성한 내용이 들어갈 공간 -->
+    {% endblock %}
+    {% include 'footer.html' %}
+</body>
+</html>
+
+```
